@@ -75,7 +75,7 @@ func main() {
 	// Verify that a parameter was passed in via the command line.
 	if len(os.Args) < 2 {
 		progName := filepath.Base(os.Args[0])
-		fmt.Printf("Usage: %v <cidr>\n", progName)
+		fmt.Printf("usage: %v <cidr>\n", progName)
 		return
 	}
 
