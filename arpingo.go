@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/carterjones/arpingo/arp"
 	"golang.org/x/net/icmp"
 	"golang.org/x/net/ipv4"
 	"log"
@@ -109,5 +110,15 @@ func main() {
 	}
 	wg.Wait()
 
-	// TODO: get the data from the arp table in an OS-agnostic way.
+	// Get the data from the arp table in an OS-agnostic way.
+	arpTable, err := arp.GetArpTable()
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	for _, entry := range arpTable {
+		if entry.Type == arp.Dynamic {
+			fmt.Println(entry)
+		}
+	}
 }
