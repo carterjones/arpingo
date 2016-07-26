@@ -10,7 +10,7 @@ import (
 )
 
 // Based off of https://gist.github.com/kotakanbe/d3059af990252ba89a82
-func ipsInCidr(cidr string) ([]net.IP, error) {
+func getIpsInCidr(cidr string) ([]net.IP, error) {
 	ip, ipnet, err := net.ParseCIDR(cidr)
 	if err != nil {
 		return nil, err
@@ -91,7 +91,7 @@ func main() {
 	}
 
 	// Get a list of all the IPs in the CIDR.
-	ips, err := ipsInCidr(cidr)
+	ips, err := getIpsInCidr(cidr)
 	if err != nil {
 		fmt.Println("Error occurred while expanding IP addresses.")
 		fmt.Println(err)
