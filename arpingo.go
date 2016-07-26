@@ -8,6 +8,7 @@ import (
 	"net"
 	"os"
 	"path/filepath"
+	"sync"
 )
 
 // Based off of https://gist.github.com/kotakanbe/d3059af990252ba89a82
@@ -90,13 +91,19 @@ func main() {
 		return
 	}
 
-	// Ping all the IPs.
+	// Ping all the IPs concurrently.
+	var wg sync.WaitGroup
+	wg.Add(len(ips))
 	for _, ip := range ips {
-		_, err = pingIp(ip)
-		if err != nil {
-			fmt.Println(err)
-		}
+		go func() {
+			defer wg.Done()
+			_, err = pingIp(ip)
+			if err != nil {
+				fmt.Println(err)
+			}
+		}()
 	}
+	wg.Wait()
 
 	// TODO: get the data from the arp table in an OS-agnostic way.
 }
