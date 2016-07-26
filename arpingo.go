@@ -83,13 +83,6 @@ func main() {
 	// Set the CIDR variable.
 	cidr := args[0]
 
-	// Validate the CIDR.
-	_, _, err := net.ParseCIDR(cidr)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-
 	// Get a list of all the IPs in the CIDR.
 	ips, err := getIpsInCidr(cidr)
 	if err != nil {
