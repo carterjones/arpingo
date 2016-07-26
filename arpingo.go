@@ -73,15 +73,14 @@ func pingIp(ip net.IP) (success bool, err error) {
 
 func main() {
 	// Verify that a parameter was passed in via the command line.
-	args := os.Args[1:]
-	if len(args) != 1 {
+	if len(os.Args) < 2 {
 		progName := filepath.Base(os.Args[0])
 		fmt.Printf("Usage: %v <cidr>\n", progName)
 		return
 	}
 
 	// Set the CIDR variable.
-	cidr := args[0]
+	cidr := os.Args[1]
 
 	// Get a list of all the IPs in the CIDR.
 	ips, err := getIpsInCidr(cidr)
