@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"golang.org/x/net/icmp"
 	"golang.org/x/net/ipv4"
+	"log"
 	"net"
 	"os"
 	"path/filepath"
@@ -85,8 +86,7 @@ func main() {
 	// Get a list of all the IPs in the CIDR.
 	ips, err := getIpsInCidr(cidr)
 	if err != nil {
-		fmt.Println("Error occurred while expanding IP addresses.")
-		fmt.Println(err)
+		log.Fatal(err)
 		return
 	}
 
@@ -99,5 +99,4 @@ func main() {
 	}
 
 	// TODO: get the data from the arp table in an OS-agnostic way.
-
 }
