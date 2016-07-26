@@ -16,6 +16,16 @@ func ipsInCidr(cidr string) ([]net.IP, error) {
 		return nil, err
 	}
 
+	// http://play.golang.org/p/m8TNTtygK0
+	inc := func(ip net.IP) {
+		for j := len(ip) - 1; j >= 0; j-- {
+			ip[j]++
+			if ip[j] > 0 {
+				break
+			}
+		}
+	}
+
 	var ips []net.IP
 	for ip := ip.Mask(ipnet.Mask); ipnet.Contains(ip); inc(ip) {
 		ips = append(ips, ip)
@@ -23,16 +33,6 @@ func ipsInCidr(cidr string) ([]net.IP, error) {
 
 	// Remove network address and broadcast address.
 	return ips, nil
-}
-
-// http://play.golang.org/p/m8TNTtygK0
-func inc(ip net.IP) {
-	for j := len(ip) - 1; j >= 0; j-- {
-		ip[j]++
-		if ip[j] > 0 {
-			break
-		}
-	}
 }
 
 func pingIp(ip net.IP) (success bool, err error) {
