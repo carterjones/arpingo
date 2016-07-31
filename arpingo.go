@@ -81,6 +81,8 @@ func main() {
 		return
 	}
 
+	verbose := false
+
 	// Set the CIDR variable.
 	cidr := os.Args[1]
 
@@ -99,7 +101,9 @@ func main() {
 			defer wg.Done()
 			_, err = pingIp(ip)
 			if err != nil {
-				fmt.Println(err)
+				if verbose {
+					fmt.Println(err)
+				}
 			}
 		}()
 	}
